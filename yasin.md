@@ -1,3 +1,0 @@
-```
-Yasin Tazeoglu
-```

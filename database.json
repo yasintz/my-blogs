@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Base64 Sifreleme",
+    "slug": "base64-chipper",
+    "date": "6/11/2019",
+    "tags": ["hello"],
+    "imageUrl": "https://camo.githubusercontent.com/769d609affb3c9c805430f96f97c82bf9fa57e6d/68747470733a2f2f692e696d6775722e636f6d2f6273694579694d2e706e67"
+  },
+  {
+    "title": "Hill Sifreleme",
+    "slug": "hill-chipper",
+    "date": "3/11/2019",
+    "tags": ["hello"],
+    "imageUrl": "https://i0.wp.com/sefiks.com/wp-content/uploads/2018/12/hills-machine.png"
+  },
+  {
+    "title": "Python Dataclasses kullanimi",
+    "slug": "python-dataclasses",
+    "date": "3/11/2019",
+    "tags": ["hello"],
+    "imageUrl": "https://i.hizliresim.com/EOaQpB.png"
+  }
+]

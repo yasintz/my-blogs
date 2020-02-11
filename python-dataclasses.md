@@ -1,7 +1,15 @@
-
-
+<json>
+{
+  "title": "Python Dataclasses kullanimi",
+  "slug": "python-dataclasses",
+  "date": "3/11/2019",
+  "tags": ["hello"],
+  "imageUrl": "https://i.hizliresim.com/EOaQpB.png"
+}
+</json>
 
 ## Nedir?
+
 Python 3.7 ile gelen güzel bir yapı olan `dataclass`'lar, Python geliştiricileri için mükemmel bir yenilik. Bu yazıda elimden geldiğince bu yapıyı anlatmaya çalısacağım.
 
 Efendim `dataclass`'lar normal class'lardaki kendini sürekli tekrarlayan kodları yazmayı engelleyen, içinde (genelde) veri depolayan classlardır. Aşağıdaki örnekte bir `dataclass`'ın nasıl tanımladığını görebilirsiniz.
@@ -34,6 +42,7 @@ Person(name='Ahmet', age=30)
 ```
 
 Eğer biz böyle bir çıktı isteseydik şöyle bir şey yazmamız gerekirdi;
+
 ```python
 class NPerson:
     def __init__(self, name, age):
@@ -46,9 +55,10 @@ class NPerson:
     def __str__(self):
         return self.__repr__()
 ```
+
 Görüldüğü gibi bir değişkeni `__init__`'den alıp nesne değişkeni yapmak için 3 kere yazmamız gerekiyor.
 
-Ayrıca dikkatli bakarsanız objelerin tam olarak *tanımlanmadığını* göreceksiniz.
+Ayrıca dikkatli bakarsanız objelerin tam olarak _tanımlanmadığını_ göreceksiniz.
 
 ```python
 >>> p = Person("Ömer", 19)
@@ -58,7 +68,9 @@ True
 >>> np == NPerson("Ahmet", 30)
 False
 ```
+
 Bunun nedeni `dataclass`'ların `__eq__` methodunu override etmiş olmaları. Normalde Python, obje karşılaştırma yaparken objelerin adreslerini karşılaştırır ama `dataclass`'lar sınıf içindeki değerleri karşılaştırır. Eğer bunu kendiniz yazmak isteseydiniz;
+
 ```python
 class NPerson:
     [...]
@@ -67,9 +79,11 @@ class NPerson:
             return NotImplemented
         return (self.name, self.age) == (other.name, other.age)
 ```
+
 `dataclass`'lar bunu bizim için yapar.
 
 `dataclass`'lara default değerler de verebiliriz;
+
 ```python
 @dataclass
 class Person:
@@ -81,7 +95,7 @@ class Person:
 Person(name='Ahmet', age=18)
 ```
 
->**Not:** `dataclass`'lar (ve Python) aslında değişkenlerin tipine dikkat etmez. Type annotations sadece okunabilirliği artırır.
+> **Not:** `dataclass`'lar (ve Python) aslında değişkenlerin tipine dikkat etmez. Type annotations sadece okunabilirliği artırır.
 
 ```python
 from dataclasses import dataclass
@@ -112,12 +126,15 @@ class Student:
     def average(self):
         return sum(self.results) / len(self.results)
 ```
+
 ```python
 >>> st = Student("Ömer", 19, [85,97,67])
 >>> st.average()
 83.0
 ```
+
 Biraz `@dataclass` decoratoru hakkında konuşalım. `@dataclass`decoratoru birçok parametre alabilir.
+
 ```python
 @dataclass
 class Foo:
@@ -129,14 +146,15 @@ class Foo:
 class Foo:
     [...]
 
-``` 
+```
+
 - `init`: eğer `True` ise `__init__` fonksiyonunu override eder.
 
 - `repr`: eğer `True` ise `__repr__` fonksiyonunu override eder.
 
 - `eq`: eğer `True` ise `__eq__` fonksiyonunu override eder. Bu konuya yukarda değinmiştik.
 
-- `order`: eğer `True` ise (varsayılan `False`)  `__lt__`, `__le__`, `__gt__` ve `__ge__` fonksiyları override eder. Bu fonksiyonlar karşılaştırma fonksiyonlarıdır. `dataclass`, `__eq__`'de olduğu gibi class değerlerini karşılaştırır.
+- `order`: eğer `True` ise (varsayılan `False`) `__lt__`, `__le__`, `__gt__` ve `__ge__` fonksiyları override eder. Bu fonksiyonlar karşılaştırma fonksiyonlarıdır. `dataclass`, `__eq__`'de olduğu gibi class değerlerini karşılaştırır.
 
 - `frozen`: eğer `True` ise nesne oluşturduktan sonra gelen değer atamaları `FrozenInstanceError` hatasını raise edecektir.
 
@@ -153,6 +171,7 @@ class Student:
     def average(self):
         return sum(self.results) / len(self.results)
 ```
+
 ```python
 >>> st = Student("Ömer", 19, [85,97,67])
 >>> st.name = "Ahmet"
@@ -187,6 +206,7 @@ class Student(Person):
     def average(self):
         return sum(self.results) / len(self.results)
 ```
+
 ```python
 >>> st = Student("Ömer", 19, [85,97,67])
 >>> st.say("Hello world")
@@ -194,12 +214,15 @@ class Student(Person):
 ```
 
 ## Alternatifler
+
 `dataclass`'ların (genellikle) veri depoladığını söylemiştik. Bunu Python'da sadece `dataclass`'ların yapmadığını görmüşsünüzdür. Basit veri yapıları olan `tuple` ve `dict` de veri depolar.
+
 ```python
 person_tuple = (19, "Ömer") # Tuple
 person_dict = {'age': 19, 'name': 'Ömer'} # Dict
 ```
-Ama dikkat ederseniz `dataclass`'lar kadar *kullanışlı* olmadığını görürsünüz. Mesela `tuple`'de argumanların yerlerini karıştırabilirsiniz debug ederken bu işinizi çok zorlaştır. `dict` de ise dataya erişmek için mutlaka bir `key`'e ihtiyaç vardır.
+
+Ama dikkat ederseniz `dataclass`'lar kadar _kullanışlı_ olmadığını görürsünüz. Mesela `tuple`'de argumanların yerlerini karıştırabilirsiniz debug ederken bu işinizi çok zorlaştır. `dict` de ise dataya erişmek için mutlaka bir `key`'e ihtiyaç vardır.
 
 ```python
 person_dict['name']  ## person_dict.name desek daha hoş olmaz mı?
@@ -220,7 +243,9 @@ person = NDict(name="Ömer", age=19)
 person.age   # 19
 person.name  # Ömer
 ```
+
 Tabi bunun ne kadar zahmetli olduğunu görüyorsunuz. Ama durun yukarıdaki kodun daha iyisini yapan bir veri yapısı var zaten. `namedtuple`
+
 ```python
 from collections import namedtuple
 
@@ -234,15 +259,17 @@ person.name
 ```
 
 E `dataclass`'lardan farkı ne bunun?
-Öncelikle `dataclass`'ların çok daha fazla özelliği buluyor. Yukarıda anlattığım *kalıtım* ve *fonksiyon* ekleme işlemleri `namedtuple`'de çok daha zor. Öte yandan karşılaştırma yaparken `namedtuple` istediğinizi vermeyecektir. Yukarıdaki örnekten devam edelim
+Öncelikle `dataclass`'ların çok daha fazla özelliği buluyor. Yukarıda anlattığım _kalıtım_ ve _fonksiyon_ ekleme işlemleri `namedtuple`'de çok daha zor. Öte yandan karşılaştırma yaparken `namedtuple` istediğinizi vermeyecektir. Yukarıdaki örnekten devam edelim
 
 ```python
 >>> person == (16, "Ömer")
 True
 ```
-İyi bir şey gibi gözükse de sonuçta kendi türünde olmadığını *zannettiğimiz* objelerle tam anlamıyla doğru karşılaştırmalar vermiyor.
+
+İyi bir şey gibi gözükse de sonuçta kendi türünde olmadığını _zannettiğimiz_ objelerle tam anlamıyla doğru karşılaştırmalar vermiyor.
 
 Ayırca `namedtuple` obje oluştuktan sonra verilerin değişmesine izin vermeyecektir.
+
 ```python
 Person = namedtuple("Person", ['age', 'name'])
 person = Person(16, "Ömer")
@@ -256,6 +283,7 @@ AttributeError  Traceback (most recent call last)
 
 AttributeError: can't set attribute
 ```
+
 ## field()
 
 Bir seneryo üzerinden devam edelim.
@@ -275,6 +303,7 @@ class Lesson:
 ```
 
 Buradan yeni nesneler üretelim
+
 ```python
 omer = Student(1, "Ömer")
 bersu = Student(2, "Bersu")
@@ -282,6 +311,7 @@ math = Lesson([omer, bersu])
 print(math)
 # Lesson(students=[Student(id=1, name='Ömer'), Student(id=2, name='Bersu')])
 ```
+
 Şimdi `Lesson` sınıfına default deger vermeyi deneyelim. Bunu yaparken bir factory fonksiyon yazalım.
 
 ```python
@@ -299,12 +329,15 @@ collect_students()
 # Student(id=5, name='Büşra'),
 # Student(id=6, name='Bersu')]
 ```
+
 Teoride `Lesson`a varsayılan değer vermek için şöyle yaparsınız.
+
 ```python
 @dataclass
 class Lesson:
     students: List[Student] = collect_students()
-``` 
+```
+
 Böyle bir tanım Python'ın en büyük anti-pattern'lerinden birisidir: Varsayılan olarak değişken değer kullanmak. Buradaki problem şu ki `Lesson`'nun tüm versiyonları aynı `.students`'in varsayılan liste objesini kullanacak. Kısacası bir `Lesson`'dan herhangi bir `Student` silindiği vakit `Lesson`'nun tüm versiyonlarından da silinecek. Aslına bakarsanız dataclass'lar bunun olmasının önüne geçip size ValueError döndürüyor.
 
 ```python
@@ -312,7 +345,7 @@ Böyle bir tanım Python'ın en büyük anti-pattern'lerinden birisidir: Varsay�
 ValueError         Traceback (most recent call last)
 <file> in <module>
      12     name: str
-     13 
+     13
 ---> 14 @dataclass
      15 class Lesson:
      16     students: List[Student] = collect_students()
@@ -322,12 +355,13 @@ ValueError         Traceback (most recent call last)
     726     if f._field_type is _FIELD and isinstance(f.default, (list, dict, set)):
 --> 727         raise ValueError(f'mutable default {type(f.default)} for field '
     728                          f'{f.name} is not allowed: use default_factory')
-    729 
+    729
 
 ValueError: mutable default <class 'list'> for field students is not allowed: use default_factory
 ```
 
 Bunun önüne geçmek için `field` methodunun `default_factory` diye bir parametresi var.
+
 ```python
 from datacasses import dataclass, field
 
@@ -342,9 +376,11 @@ Lesson()
 `field`, sadece `default_factory` ile sınırlı değil. [Bu bağlantıdan](https://docs.python.org/3/library/dataclasses.html#dataclasses.field) diğer parametrelere ve ne işe yaradıklarına ulaşabilirsiniz.
 
 ## Optimizasyon
-Bahsedeceğim şey `__slots__`, `__slots__` kısaca, sınıflara dinamik olmayan *sabit* attributelar belirleyerek RAM'dan ve *hızdan* tasarruf sağlıyor. `__slots__`, kendi başına ele alınması gereken bir konu oluğu için [şuradan](https://medium.com/@mazlumagar/python-tricks-1-slots-e0c9b04f4c5a) daha fazla bilgiye ulaşabilirsiniz.
+
+Bahsedeceğim şey `__slots__`, `__slots__` kısaca, sınıflara dinamik olmayan _sabit_ attributelar belirleyerek RAM'dan ve _hızdan_ tasarruf sağlıyor. `__slots__`, kendi başına ele alınması gereken bir konu oluğu için [şuradan](https://medium.com/@mazlumagar/python-tricks-1-slots-e0c9b04f4c5a) daha fazla bilgiye ulaşabilirsiniz.
 
 `dataclass`'larda `__slots__` kullanımı normal classlardaki gibidir.
+
 ```python
 from dataclasses import dataclass, field
 
@@ -353,7 +389,7 @@ class NormalPerson:
     name: str
     age: int
     salary: int
-    
+
 @dataclass
 class SlotPerson:
     __slots__ = ['name', 'age', 'salary']
@@ -363,13 +399,16 @@ class SlotPerson:
 ```
 
 Hafızada sahip olduğu büyüklüğe bakalım.
+
 ```python
 from sys import getsizeof
 
 getsizeof(NormalPerson("Ahmet", 33, 3000)), getsizeof(SlotPerson("Ahmet", 33, 3000))
 # (32, 36)
 ```
+
 Ayırca Python'un veriye erişmesi de normal class'lara göre daha hızlıdır.
+
 ```python
 from timeit import timeit
 
@@ -378,4 +417,5 @@ timeit(setup="slot_p = SlotPerson('Ahmet', 33, 3000)", globals=globals())
 timeit(setup="normal_p = NormalPerson('Ahmet', 33, 3000)", globals=globals())
 # 0.012095599999156548
 ```
+
 tabi yazmış olduğumuz sınıfın basitliğinden dolayı aradaki fark oldukça az. Daha büyük sınıflarda bu fark dikkate değer biçimde artıyor.
